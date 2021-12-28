@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import SingleCard from "./components/SingleCard";
 
 const cardImages = [
     { src: "/images/helmet-1.png" },
@@ -13,7 +14,10 @@ const cardImages = [
 function App() {
     const [cards, setCards] = useState([]);
     const [turns, setTurns] = useState(0);
+    const [choiceOne, setChoiceOne] = useState(null);
+    const [choiceTwo, setChoiceTwo] = useState(null);
 
+    // Shuffle Cards
     const shuffleCards = () => {
         const shuffledCards = [...cardImages, ...cardImages].sort(() => Math.random() - 0.5).map((card) => ({ ...card, id: Math.random() }));
 
@@ -21,7 +25,17 @@ function App() {
         setTurns(0);
     };
 
-    console.log(cards, turns);
+    // handle choices
+    const handleChoice = (card) => {
+        choiceOne ? setChoiceOne(card) : setChoiceTwo(card);
+    };
+
+    // Reset Choices and increment Turn
+    const resetTurn = () => {
+        setChoiceOne(null);
+        setChoiceTwo(null);
+        setTurns((prevTurn) => prevTurn + 1);
+    };
 
     return (
         <div className="App">
@@ -30,12 +44,7 @@ function App() {
 
             <div className="card-grid">
                 {cards.map((card) => (
-                    <div className="card" key={card.id}>
-                        <div>
-                            <img className="front" src={card.src} alt="card front" />
-                            <img className="back" src="/images/cover.png" alt="card back" />
-                        </div>
-                    </div>
+                    <SingleCard key={card.id} card={card} handleChoice={handleChoice} />
                 ))}
             </div>
         </div>
