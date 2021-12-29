@@ -10,7 +10,7 @@ const SingleCard = ({ card, handleChoice, flipped, disabled }) => {
         <div className="card">
             <div className={flipped ? "flipped" : ""}>
                 <img className="front" src={card.src} alt="card front" />
-                <img className="back" src="/images/cover.png" alt="card back" onClick={handleClick} />
+                <img className="back" src="images/cover.png" alt="card back" onClick={handleClick} />
             </div>
         </div>
     );
