@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import SingleCard from "./components/SingleCard";
 
 const cardImages = [
-    { src: "/images/helmet-1.png" },
-    { src: "/images/potion-1.png" },
-    { src: "/images/ring-1.png" },
-    { src: "/images/scroll-1.png" },
-    { src: "/images/shield-1.png" },
-    { src: "/images/sword-1.png" },
+    { src: "/images/helmet-1.png", matched: false },
+    { src: "/images/potion-1.png", matched: false },
+    { src: "/images/ring-1.png", matched: false },
+    { src: "/images/scroll-1.png", matched: false },
+    { src: "/images/shield-1.png", matched: false },
+    { src: "/images/sword-1.png", matched: false },
 ];
 
 function App() {
@@ -29,6 +29,25 @@ function App() {
     const handleChoice = (card) => {
         choiceOne ? setChoiceOne(card) : setChoiceTwo(card);
     };
+
+    useEffect(() => {
+        if (choiceOne && choiceTwo) {
+            if (choiceOne.src === choiceTwo.src) {
+                setCards((prevCard) => {
+                    return prevCard.map((card) => {
+                        if (card.src === choiceOne.src) {
+                            return { ...card, matched: true };
+                        } else {
+                            return card;
+                        }
+                    });
+                });
+                resetTurn();
+            } else {
+                resetTurn();
+            }
+        }
+    }, [choiceOne, choiceTwo]);
 
     // Reset Choices and increment Turn
     const resetTurn = () => {
