@@ -24,7 +24,14 @@ function App() {
 
         setCards(shuffledCards);
         setTurns(0);
+        setChoiceOne(null);
+        setChoiceTwo(null);
     };
+
+    // Start Game Automatically
+    useEffect(() => {
+        shuffleCards();
+    }, []);
 
     // handle choices
     const handleChoice = (card) => {
