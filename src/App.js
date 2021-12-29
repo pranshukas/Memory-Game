@@ -27,9 +27,10 @@ function App() {
 
     // handle choices
     const handleChoice = (card) => {
-        choiceOne ? setChoiceOne(card) : setChoiceTwo(card);
+        choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
     };
 
+    // Updating matched property for selected card
     useEffect(() => {
         if (choiceOne && choiceTwo) {
             if (choiceOne.src === choiceTwo.src) {
@@ -44,7 +45,7 @@ function App() {
                 });
                 resetTurn();
             } else {
-                resetTurn();
+                setTimeout(() => resetTurn(), 1000);
             }
         }
     }, [choiceOne, choiceTwo]);
@@ -63,7 +64,7 @@ function App() {
 
             <div className="card-grid">
                 {cards.map((card) => (
-                    <SingleCard key={card.id} card={card} handleChoice={handleChoice} />
+                    <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} />
                 ))}
             </div>
         </div>
